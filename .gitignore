@@ -28,7 +28,6 @@ data/
 *.tar.gz
 
 # Models - binary files are bad for Git history
-models/
 *.pth
 *.pt
 *.onnx
