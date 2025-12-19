@@ -29,7 +29,6 @@ data/
 
 # Models - binary files are bad for Git history
 models/
-*.h5
 *.pth
 *.pt
 *.onnx
