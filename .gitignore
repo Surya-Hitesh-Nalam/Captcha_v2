@@ -1,0 +1,47 @@
+# --- Python Basics ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtual Environments ---
+# Common names for virtual envs
+venv/
+env/
+.env
+.venv/
+
+# --- Jupyter Notebooks ---
+# Removes hidden checkpoint files created by Jupyter
+.ipynb_checkpoints/
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+
+# --- ML & Data Science Specifics ---
+
+# Datasets - usually too large for Git
+dataset/
+data/
+*.csv
+*.zip
+*.tar.gz
+
+# Models - binary files are bad for Git history
+models/
+*.h5
+*.pth
+*.pt
+*.onnx
+*.pkl
+*.tflite
+
+# Results and Logs - these change every run
+results/
+logs/
+runs/
+__log__/
+
+# --- System Files ---
+.DS_Store
+Thumbs.db

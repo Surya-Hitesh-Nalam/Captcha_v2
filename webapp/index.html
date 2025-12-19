@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTCHA Solver AI | CNN + ViT + BiLSTM</title>
+    <meta name="description" content="AI-powered CAPTCHA recognition using deep learning">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                        <path d="M2 17l10 5 10-5" />
+                        <path d="M2 12l10 5 10-5" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>CAPTCHA Solver</h1>
+                    <span class="logo-subtitle">CNN + ViT + BiLSTM</span>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    <span class="stat-value" id="text-accuracy">84.91%</span>
+                    <span class="stat-label">Text Accuracy</span>
+                </div>
+                <div class="stat-badge">
+                    <span class="stat-value" id="math-accuracy">97.74%</span>
+                    <span class="stat-label">Math Accuracy</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- CAPTCHA Type Selector -->
+            <div class="type-selector">
+                <button class="type-btn active" data-type="text">
+                    <span class="type-icon">Aa</span>
+                    <span class="type-label">Text CAPTCHA</span>
+                </button>
+                <button class="type-btn" data-type="math">
+                    <span class="type-icon">∑</span>
+                    <span class="type-label">Math CAPTCHA</span>
+                </button>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="upload-section glass-card">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content">
+                        <div class="upload-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                        </div>
+                        <p class="drop-text">Drag & drop your CAPTCHA image here</p>
+                        <p class="drop-subtext">or click to browse</p>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                    </div>
+                    <div class="drop-zone-hover">
+                        <span>Drop to solve!</span>
+                    </div>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="preview-area" id="previewArea">
+                    <div class="preview-image-container">
+                        <img id="previewImage" src="" alt="CAPTCHA Preview">
+                        <button class="remove-btn" id="removeBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="solve-btn" id="solveBtn">
+                        <span class="solve-btn-text">Solve CAPTCHA</span>
+                        <span class="solve-btn-icon">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Neural Network Pipeline Visualization -->
+            <div class="pipeline-section glass-card" id="pipelineSection">
+                <div class="pipeline-header">
+                    <h2>🧠 Neural Network Pipeline</h2>
+                    <span class="pipeline-status" id="pipelineStatus">Ready</span>
+                </div>
+
+                <div class="pipeline-container">
+                    <div class="pipeline-stage" id="stage-input">
+                        <div class="stage-icon">📷</div>
+                        <div class="stage-content">
+                            <div class="stage-title">Input</div>
+                            <div class="stage-desc">128×32 Grayscale</div>
+                        </div>
+                        <div class="stage-progress"></div>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-stage" id="stage-cnn">
+                        <div class="stage-icon">🔲</div>
+                        <div class="stage-content">
+                            <div class="stage-title">CNN</div>
+                            <div class="stage-desc">3 Conv Layers</div>
+                        </div>
+                        <div class="stage-progress"></div>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-stage" id="stage-vit">
+                        <div class="stage-icon">👁️</div>
+                        <div class="stage-content">
+                            <div class="stage-title">ViT Block</div>
+                            <div class="stage-desc">Attention</div>
+                        </div>
+                        <div class="stage-progress"></div>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-stage" id="stage-lstm">
+                        <div class="stage-icon">🔄</div>
+                        <div class="stage-content">
+                            <div class="stage-title">BiLSTM</div>
+                            <div class="stage-desc">2 Layers</div>
+                        </div>
+                        <div class="stage-progress"></div>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-stage" id="stage-output">
+                        <div class="stage-icon">✨</div>
+                        <div class="stage-content">
+                            <div class="stage-title">Output</div>
+                            <div class="stage-desc" id="outputPreview">5 chars</div>
+                        </div>
+                        <div class="stage-progress"></div>
+                    </div>
+                </div>
+
+                <div class="pipeline-info">
+                    <span>15+ Layers</span>
+                    <span>•</span>
+                    <span>~2.5M Parameters</span>
+                    <span>•</span>
+                    <span>CNN + ViT + BiLSTM</span>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section glass-card" id="resultsSection">
+                <div class="results-header">
+                    <h2>Prediction Result</h2>
+                    <div class="result-badge" id="resultBadge">
+                        <span class="badge-dot"></span>
+                        <span class="badge-text">Ready</span>
+                    </div>
+                </div>
+                <div class="results-content">
+                    <div class="result-main">
+                        <span class="result-label">Solved Value</span>
+                        <span class="result-value" id="resultValue">—</span>
+                    </div>
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Confidence</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidenceFill"></div>
+                            </div>
+                            <span class="detail-value" id="confidenceValue">—</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Processing Time</span>
+                            <span class="detail-value" id="processingTime">—</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Architecture</span>
+                            <span class="detail-value arch-badge" id="modelUsed">CNN + ViT + BiLSTM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Character Breakdown -->
+                <div class="char-breakdown" id="charBreakdown">
+                    <h3>Character Analysis</h3>
+                    <div class="char-grid" id="charGrid">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>Recent Solves</h3>
+                    <button class="clear-history-btn" id="clearHistoryBtn">Clear All</button>
+                </div>
+                <div class="history-grid" id="historyGrid">
+                    <div class="history-empty">
+                        <span>No CAPTCHAs solved yet</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by TensorFlow & FastAPI | CNN + Vision Transformer + BiLSTM Architecture</p>
+        </footer>
+    </div>
+
+    <!-- Processing Visualization Modal -->
+    <div class="processing-modal" id="processingModal">
+        <div class="processing-content">
+            <div class="proc-title-bar">
+                <h2>🧠 Neural Network Processing</h2>
+                <button class="proc-close-btn" id="procCloseBtn">✕</button>
+            </div>
+
+            <div class="process-stage" id="proc-input">
+                <div class="proc-header">
+                    <div class="proc-icon">📷</div>
+                    <div class="proc-info">
+                        <h3>Step 1: Image Preprocessing</h3>
+                        <p>Converting image to 128×32 grayscale, normalizing pixel values (0-1)</p>
+                    </div>
+                    <div class="proc-status">⏳</div>
+                </div>
+                <div class="proc-visual input-proc-visual">
+                    <div class="proc-img-box">Original</div>
+                    <span class="proc-arrow">→</span>
+                    <div class="proc-img-box gray">Grayscale</div>
+                    <span class="proc-arrow">→</span>
+                    <div class="proc-img-box small">128×32</div>
+                </div>
+            </div>
+
+            <div class="process-stage" id="proc-cnn">
+                <div class="proc-header">
+                    <div class="proc-icon">🔲</div>
+                    <div class="proc-info">
+                        <h3>Step 2: CNN Feature Extraction</h3>
+                        <p>3 Convolutional layers detect edges, textures, and patterns in the image</p>
+                    </div>
+                    <div class="proc-status">⏳</div>
+                </div>
+                <div class="proc-visual cnn-proc-visual">
+                    <div class="cnn-block">Conv2D<br><small>32 filters</small></div>
+                    <span class="proc-arrow">→</span>
+                    <div class="cnn-block">Conv2D<br><small>64 filters</small></div>
+                    <span class="proc-arrow">→</span>
+                    <div class="cnn-block">Conv2D<br><small>128 filters</small></div>
+                </div>
+            </div>
+
+            <div class="process-stage" id="proc-vit">
+                <div class="proc-header">
+                    <div class="proc-icon">👁️</div>
+                    <div class="proc-info">
+                        <h3>Step 3: Vision Transformer (ViT)</h3>
+                        <p>Self-attention mechanism learns relationships between different parts of the image</p>
+                    </div>
+                    <div class="proc-status">⏳</div>
+                </div>
+                <div class="proc-visual vit-proc-visual">
+                    <div class="attention-demo">
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell high"></div>
+                        <div class="att-cell high"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell high"></div>
+                        <div class="att-cell high"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                        <div class="att-cell"></div>
+                    </div>
+                    <span class="proc-label">Attention Map</span>
+                </div>
+            </div>
+
+            <div class="process-stage" id="proc-lstm">
+                <div class="proc-header">
+                    <div class="proc-icon">🔄</div>
+                    <div class="proc-info">
+                        <h3>Step 4: BiLSTM Sequence Processing</h3>
+                        <p>Bidirectional LSTM processes features left-to-right AND right-to-left for context</p>
+                    </div>
+                    <div class="proc-status">⏳</div>
+                </div>
+                <div class="proc-visual lstm-proc-visual">
+                    <div class="lstm-flow">
+                        <div class="lstm-dir">→ Forward LSTM</div>
+                        <div class="lstm-cells">
+                            <div class="lstm-unit"></div>
+                            <div class="lstm-unit"></div>
+                            <div class="lstm-unit"></div>
+                            <div class="lstm-unit"></div>
+                        </div>
+                        <div class="lstm-dir">← Backward LSTM</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="process-stage" id="proc-output">
+                <div class="proc-header">
+                    <div class="proc-icon">✨</div>
+                    <div class="proc-info">
+                        <h3>Step 5: Character Classification</h3>
+                        <p>5 Dense layers output probability distribution over 37 characters each</p>
+                    </div>
+                    <div class="proc-status">⏳</div>
+                </div>
+                <div class="proc-visual output-proc-visual">
+                    <div class="output-chars" id="outputCharsPreview">
+                        <span class="out-char">?</span>
+                        <span class="out-char">?</span>
+                        <span class="out-char">?</span>
+                        <span class="out-char">?</span>
+                        <span class="out-char">?</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="proc-footer">
+                <div class="proc-progress-bar">
+                    <div class="proc-progress-fill" id="procProgressFill"></div>
+                </div>
+                <span class="proc-progress-text" id="procProgressText">Initializing...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon"></span>
+        <span class="toast-message"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
