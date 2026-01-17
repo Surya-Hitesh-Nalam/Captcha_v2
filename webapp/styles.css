@@ -1523,3 +1523,267 @@ body {
     font-size: 0.75rem;
     color: var(--text-secondary);
 }
+
+/* ============================================
+   MODEL PERFORMANCE RESULTS SECTION
+   ============================================ */
+
+.model-results-section {
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.model-results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.model-results-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.model-results-subtitle {
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+}
+
+/* Results Tabs */
+.results-tabs {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.results-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    color: var(--text-secondary);
+}
+
+.results-tab:hover {
+    border-color: var(--accent-purple);
+    transform: translateY(-2px);
+}
+
+.results-tab.active {
+    border-color: var(--accent-purple);
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.tab-icon {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.tab-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.tab-accuracy {
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.results-tab:not(.active) .tab-accuracy {
+    background: var(--bg-tertiary);
+    color: var(--accent-green);
+}
+
+/* Results Tab Content */
+.results-tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.results-tab-content.active {
+    display: block;
+}
+
+/* Results Metrics */
+.results-metrics {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.metric-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    min-width: 120px;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    border-color: var(--accent-cyan);
+    transform: translateY(-2px);
+}
+
+.metric-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: var(--gradient-success);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.25rem;
+}
+
+/* Results Images */
+.results-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.result-image-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.result-image-card:hover {
+    border-color: var(--accent-purple);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+}
+
+.result-image-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.result-image-card p {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-bottom: 1rem;
+}
+
+.result-image-card img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    background: white;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.result-image-card img:hover {
+    transform: scale(1.02);
+}
+
+/* Image Modal for Full View */
+.image-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 2rem;
+}
+
+.image-modal.visible {
+    display: flex;
+}
+
+.image-modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.image-modal-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.image-modal-close:hover {
+    background: var(--accent-pink);
+    border-color: var(--accent-pink);
+    transform: scale(1.1);
+}
+
+/* Responsive for Model Results */
+@media (max-width: 768px) {
+    .model-results-section {
+        padding: 1.5rem;
+    }
+
+    .results-tabs {
+        flex-direction: column;
+    }
+
+    .results-tab {
+        justify-content: center;
+    }
+
+    .results-metrics {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .metric-card {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .results-images {
+        grid-template-columns: 1fr;
+    }
+}

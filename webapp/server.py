@@ -15,33 +15,21 @@ from PIL import Image
 import tensorflow as tf
 from tensorflow import keras
 
-# ============================================
-# CONFIGURATION
-# ============================================
-
 WEBAPP_DIR = Path(__file__).parent
 MODELS_DIR = WEBAPP_DIR.parent / "models"
 
-TEXT_MODEL_PATH = MODELS_DIR / "Final_Project_ViT.h5"
+TEXT_MODEL_PATH = MODELS_DIR / "Final_Project_ViT_four.h5"
 MATH_MODEL_PATH = MODELS_DIR / "Unified_Pro_Model_Math.h5"
 
 IMG_WIDTH = 128
 IMG_HEIGHT = 32
 
-# Text model: 37 chars, 5 positions
-# From notebook line 358: "0123456789abcdefghijklmnopqrstuvwxyz_"
-# Underscore is at the END (appended after sorted chars)
 TEXT_CHARS = "0123456789abcdefghijklmnopqrstuvwxyz_"
 TEXT_NUM_TO_CHAR = {i: c for i, c in enumerate(TEXT_CHARS)}
 
-# Math model: 12 chars, 8 positions
-# Sorted: + (43), - (45), 0-9 (48-57), _ (95)
 MATH_CHARS = "+-0123456789_"
 MATH_NUM_TO_CHAR = {i: c for i, c in enumerate(MATH_CHARS)}
 
-# ============================================
-# CUSTOM LAYER
-# ============================================
 
 class ViTBlock(keras.layers.Layer):
     def __init__(self, embed_dim, num_heads, ff_dim, rate=0.1, **kwargs):
@@ -62,7 +50,7 @@ class ViTBlock(keras.layers.Layer):
         self.d1 = keras.layers.Dropout(self.rate)
         self.d2 = keras.layers.Dropout(self.rate)
 
-    def call(self, x, training=False):  # training=False for inference!
+    def call(self, x, training=False): 
         a = self.att(x, x)
         a = self.d1(a, training=training)
         x = self.ln1(x + a)
@@ -76,10 +64,6 @@ class ViTBlock(keras.layers.Layer):
                 'num_heads': self.num_heads, 
                 'ff_dim': self.ff_dim, 
                 'rate': self.rate}
-
-# ============================================
-# LOAD MODELS
-# ============================================
 
 print("\n🚀 Loading CAPTCHA Solver models...")
 
@@ -98,10 +82,6 @@ try:
 except Exception as e:
     print(f"❌ Math model error: {e}")
 
-# ============================================
-# FASTAPI APP
-# ============================================
-
 app = FastAPI(title="CAPTCHA Solver API", version="1.0.0")
 
 app.add_middleware(
@@ -111,10 +91,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# ============================================
-# HELPERS
-# ============================================
 
 def preprocess_image(image_bytes: bytes) -> np.ndarray:
     """Simple preprocessing matching training pipeline"""
@@ -133,7 +109,6 @@ def decode(preds, num_to_char):
     for i, p in enumerate(preds):
         probs = p[0]
         
-        # Get top 3 predictions
         top_indices = np.argsort(probs)[-3:][::-1]
         top_3 = []
         for idx in top_indices:
@@ -141,7 +116,6 @@ def decode(preds, num_to_char):
             conf = float(probs[idx]) * 100
             top_3.append({"char": char, "confidence": round(conf, 1)})
         
-        # Best prediction
         best_idx = int(np.argmax(probs))
         best_char = num_to_char.get(best_idx, '?')
         best_conf = float(probs[best_idx]) * 100
@@ -167,10 +141,6 @@ def safe_eval_math(expr: str) -> str:
         return str(eval(clean))
     except:
         return expr
-
-# ============================================
-# ENDPOINTS
-# ============================================
 
 @app.get("/")
 async def root():

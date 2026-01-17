@@ -517,3 +517,70 @@ function clearHistory() {
     renderHistory();
     showToast('History cleared', 'success');
 }
+
+// ============================================
+// MODEL RESULTS TABS
+// ============================================
+const resultsTabs = document.querySelectorAll('.results-tab');
+const resultsTabContents = document.querySelectorAll('.results-tab-content');
+
+resultsTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Remove active from all tabs
+        resultsTabs.forEach(t => t.classList.remove('active'));
+        resultsTabContents.forEach(c => c.classList.remove('active'));
+
+        // Add active to clicked tab
+        tab.classList.add('active');
+        const tabId = tab.dataset.resultsTab;
+        document.getElementById(`${tabId}-results`).classList.add('active');
+    });
+});
+
+// ============================================
+// IMAGE MODAL FOR FULL VIEW
+// ============================================
+function createImageModal() {
+    const modal = document.createElement('div');
+    modal.className = 'image-modal';
+    modal.id = 'imageModal';
+    modal.innerHTML = `
+        <button class="image-modal-close">✕</button>
+        <img src="" alt="Full size chart">
+    `;
+    document.body.appendChild(modal);
+
+    // Close on button click
+    modal.querySelector('.image-modal-close').addEventListener('click', () => {
+        modal.classList.remove('visible');
+    });
+
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('visible');
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('visible')) {
+            modal.classList.remove('visible');
+        }
+    });
+
+    return modal;
+}
+
+// Initialize image modal
+const imageModal = createImageModal();
+const modalImage = imageModal.querySelector('img');
+
+// Add click handlers to result images
+document.querySelectorAll('.result-image-card img').forEach(img => {
+    img.addEventListener('click', () => {
+        modalImage.src = img.src;
+        modalImage.alt = img.alt;
+        imageModal.classList.add('visible');
+    });
+});

@@ -224,6 +224,93 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Model Performance Results Section -->
+            <div class="model-results-section glass-card" id="modelResultsSection">
+                <div class="model-results-header">
+                    <h2>📊 Model Performance Results</h2>
+                    <p class="model-results-subtitle">Training metrics and evaluation results for our deep learning
+                        models</p>
+                </div>
+
+                <!-- Results Tabs -->
+                <div class="results-tabs">
+                    <button class="results-tab active" data-results-tab="math">
+                        <span class="tab-icon">∑</span>
+                        <span class="tab-text">Math CAPTCHA</span>
+                        <span class="tab-accuracy">97.74%</span>
+                    </button>
+                    <button class="results-tab" data-results-tab="text">
+                        <span class="tab-icon">Aa</span>
+                        <span class="tab-text">Text CAPTCHA</span>
+                        <span class="tab-accuracy">84.91%</span>
+                    </button>
+                </div>
+
+                <!-- Math CAPTCHA Results -->
+                <div class="results-tab-content active" id="math-results">
+                    <div class="results-metrics">
+                        <div class="metric-card">
+                            <span class="metric-value">97.74%</span>
+                            <span class="metric-label">Accuracy</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value">30</span>
+                            <span class="metric-label">Epochs</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value">12</span>
+                            <span class="metric-label">Classes (+,-,0-9)</span>
+                        </div>
+                    </div>
+                    <div class="results-images">
+                        <div class="result-image-card">
+                            <h4>📈 Training Curves</h4>
+                            <p>Loss convergence and accuracy improvement over epochs</p>
+                            <img src="results_images/math_training_curves.png" alt="Math CAPTCHA Training Curves"
+                                loading="lazy">
+                        </div>
+                        <div class="result-image-card">
+                            <h4>🎯 Confusion Matrix</h4>
+                            <p>Character-level prediction accuracy breakdown</p>
+                            <img src="results_images/math_confusion_matrix.png" alt="Math CAPTCHA Confusion Matrix"
+                                loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text CAPTCHA Results -->
+                <div class="results-tab-content" id="text-results">
+                    <div class="results-metrics">
+                        <div class="metric-card">
+                            <span class="metric-value">84.91%</span>
+                            <span class="metric-label">Accuracy</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value">50</span>
+                            <span class="metric-label">Epochs</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value">36</span>
+                            <span class="metric-label">Classes (a-z, 0-9)</span>
+                        </div>
+                    </div>
+                    <div class="results-images">
+                        <div class="result-image-card">
+                            <h4>📈 Training Curves</h4>
+                            <p>Loss convergence and accuracy improvement over epochs</p>
+                            <img src="results_images/text_training_curves.png" alt="Text CAPTCHA Training Curves"
+                                loading="lazy">
+                        </div>
+                        <div class="result-image-card">
+                            <h4>🎯 Confusion Matrix</h4>
+                            <p>Character-level prediction accuracy (36 alphanumeric classes)</p>
+                            <img src="results_images/text_confusion_matrix.png" alt="Text CAPTCHA Confusion Matrix"
+                                loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Footer -->
