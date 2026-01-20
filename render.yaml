@@ -1,0 +1,24 @@
+# Render Blueprint - Deploy CAPTCHA Solver
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: captcha-solver
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    
+    # Free instance type
+    plan: free
+    
+    # Auto-deploy on push
+    autoDeploy: true
+    
+    # Health check endpoint
+    healthCheckPath: /api/health
+    
+    # Environment variables
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10"
+      - key: PORT
+        value: "8000"
