@@ -1,5 +1,5 @@
 # CAPTCHA Solver - Production Dockerfile
-# Optimized for Render, Railway, and similar platforms
+# Optimized for Hugging Face Spaces, Render, and Railway
 
 FROM python:3.10-slim
 
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first (for layer caching)
-COPY webapp/requirements.txt .
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -24,16 +24,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY webapp/ ./webapp/
 COPY models/ ./models/
+COPY app.py .
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8000
+ENV PORT=7860
 
-# Expose port
-EXPOSE 8000
-
-# Change to webapp directory and run server
-WORKDIR /app/webapp
+# Expose port (7860 for HF Spaces)
+EXPOSE 7860
 
 # Start the FastAPI server
-CMD ["python", "-m", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "app.py"]

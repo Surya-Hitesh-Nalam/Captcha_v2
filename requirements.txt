@@ -1,0 +1,16 @@
+# CAPTCHA Solver Dependencies
+
+# Web Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# File Upload Support
+python-multipart>=0.0.6
+
+# Machine Learning
+tensorflow>=2.13.0
+numpy>=1.24.0
+
+# Image Processing
+Pillow>=10.0.0
+opencv-python-headless>=4.8.0
